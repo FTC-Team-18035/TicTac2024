@@ -12,8 +12,8 @@ public class Test_Corn_Starch extends OpMode {
 
     @Override
     public void init() {
-        leftDrive = hardwareMap.get(DcMotor.class, "left");
-        rightDrive = hardwareMap.get(DcMotor.class, "right");
+        leftDrive = hardwareMap.get(DcMotor.class, "Left");
+        rightDrive = hardwareMap.get(DcMotor.class, "Right");
         rightDrive.setDirection(DcMotor.Direction.REVERSE);
         leftDrive.setDirection(DcMotorSimple.Direction.FORWARD);
         telemetry.addData(">", "Robot Ready. PRESS START.");
