@@ -65,8 +65,8 @@ public class AutoSubmersibleLap extends LinearOpMode {
     private DcMotor         rightDrive  = null;
 
     private ElapsedTime     runtime = new ElapsedTime();
-    private double          turnTime = 0.4;                // using this vairable instead of static value allow all turn updates in one change
-    private double          straightTime = 2.5;            // using this vairable instead of static value allow forward updates in one change
+    static final double          turnTime = 0.4;                // using this vairable instead of static value allow all turn updates in one change
+    static final double          straightTime = 2.5;            // using this vairable instead of static value allow forward updates in one change
 
     static final double     FORWARD_SPEED = 0.5;
     static final double     TURN_SPEED    = 0.5;
