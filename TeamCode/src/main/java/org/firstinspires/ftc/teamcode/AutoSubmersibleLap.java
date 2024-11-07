@@ -43,10 +43,13 @@ import com.qualcomm.robotcore.util.ElapsedTime;
  *   otherwise you would use: RobotAutoDriveByEncoder;
  *
  *   The desired path in this example is:
- *   - Drive forward for 3 seconds
- *   - Spin right for 1.3 seconds
- *   - Drive Backward for 1 Second
- *
+ *   - Drive forward past the submersible for 3.5 seconds
+ *   - Turn 90 degress right for .4 seconds
+ *   - Drive Forward for 2.5 seconds
+ *   - Turn 90 degress right for .4 seconds 
+ *   - Drive Forward for 2.5 seconds
+ *   - Turn 90 degress right for .4 seconds 
+ *   - Drive Forward for 2.5 seconds
  *  The code is written in a simple form with no optimizations.
  *  However, there are several ways that this type of sequence could be streamlined,
  *
@@ -62,7 +65,8 @@ public class AutoSubmersibleLap extends LinearOpMode {
     private DcMotor         rightDrive  = null;
 
     private ElapsedTime     runtime = new ElapsedTime();
-
+    private double          turnTime = 0.4;                // using this vairable instead of static value allow all turn updates in one change
+    private double          straightTime = 2.5;            // using this vairable instead of static value allow forward updates in one change
 
     static final double     FORWARD_SPEED = 0.5;
     static final double     TURN_SPEED    = 0.5;
@@ -89,7 +93,7 @@ public class AutoSubmersibleLap extends LinearOpMode {
 
         // Step through each leg of the path, ensuring that the OpMode has not been stopped along the way.
 
-        // Step 1:  Drive forward for 3 seconds
+        // Step 1:  Drive forward for 3.5 seconds
         leftDrive.setPower(FORWARD_SPEED);
         rightDrive.setPower(FORWARD_SPEED);
         runtime.reset();
@@ -98,68 +102,63 @@ public class AutoSubmersibleLap extends LinearOpMode {
             telemetry.update();
         }
 
-        // Step 2:  Spin right for 1.3 seconds
+        // Step 2:  Spin right for .4 seconds
         leftDrive.setPower(TURN_SPEED);
         //rightDrive.setPower(-TURN_SPEED);
         runtime.reset();
-        while (opModeIsActive() && (runtime.seconds() < .4)) {
+        while (opModeIsActive() && (runtime.seconds() < turnTime)) {
             telemetry.addData("Path", "Leg 2: %4.1f S Elapsed", runtime.seconds());
             telemetry.update();
         }
 
-        // Step 3:  Drive Backward for 1 Second
+        // Step 3:  Drive Forward for 2.5 seconds
         leftDrive.setPower(FORWARD_SPEED);
         rightDrive.setPower(FORWARD_SPEED);
         runtime.reset();
-        while (opModeIsActive() && (runtime.seconds() < 2.5)) {
+        while (opModeIsActive() && (runtime.seconds() < straightTime)) {
             telemetry.addData("Path", "Leg 3: %4.1f S Elapsed", runtime.seconds());
             telemetry.update();
         }
 
+        // Step 4:  Spin right for .4 seconds
         leftDrive.setPower(TURN_SPEED);
         //rightDrive.setPower(-TURN_SPEED);
         runtime.reset();
-        while (opModeIsActive() && (runtime.seconds() < .4)) {
+        while (opModeIsActive() && (runtime.seconds() < turnTime)) {
             telemetry.addData("Path", "Leg 2: %4.1f S Elapsed", runtime.seconds());
             telemetry.update();
         }
 
+        // Step 5:  Drive Forward for 2.5 seconds
         leftDrive.setPower(FORWARD_SPEED);
         rightDrive.setPower(FORWARD_SPEED);
         runtime.reset();
-        while (opModeIsActive() && (runtime.seconds() < 2.5)) {
+        while (opModeIsActive() && (runtime.seconds() < straightTime)) {
             telemetry.addData("Path", "Leg 3: %4.1f S Elapsed", runtime.seconds());
             telemetry.update();
         }
 
+        // Step 6:  Spin right for .4 seconds
         leftDrive.setPower(TURN_SPEED);
         //rightDrive.setPower(-TURN_SPEED);
         runtime.reset();
-        while (opModeIsActive() && (runtime.seconds() < .4)) {
+        while (opModeIsActive() && (runtime.seconds() < turnTime)) {
             telemetry.addData("Path", "Leg 2: %4.1f S Elapsed", runtime.seconds());
             telemetry.update();
         }
 
+         // Step 7:  Drive Forward for 2.5 seconds
         leftDrive.setPower(FORWARD_SPEED);
         rightDrive.setPower(FORWARD_SPEED);
         runtime.reset();
-        while (opModeIsActive() && (runtime.seconds() < 2.5)) {
+        while (opModeIsActive() && (runtime.seconds() < straightTime)) {
             telemetry.addData("Path", "Leg 3: %4.1f S Elapsed", runtime.seconds());
             telemetry.update();
         }
 
-        leftDrive.setPower(TURN_SPEED);
-        //rightDrive.setPower(-TURN_SPEED);
-        runtime.reset();
-        while (opModeIsActive() && (runtime.seconds() < .4)) {
-            telemetry.addData("Path", "Leg 2: %4.1f S Elapsed", runtime.seconds());
-            telemetry.update();
-        }
-
-        // Step 4:  Stop
+        // Step 8:  Stop
         leftDrive.setPower(0);
         rightDrive.setPower(0);
-
         telemetry.addData("Path", "Complete");
         telemetry.update();
         stop();
