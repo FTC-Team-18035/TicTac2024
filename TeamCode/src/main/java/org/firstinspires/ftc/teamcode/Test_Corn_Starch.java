@@ -9,6 +9,7 @@ import com.qualcomm.robotcore.hardware.DcMotorSimple;
 public class Test_Corn_Starch extends OpMode {
     public DcMotor leftDrive = null;
     public DcMotor rightDrive = null;
+    double turboPower = 2;
 
     @Override
     public void init() {
@@ -31,8 +32,15 @@ public class Test_Corn_Starch extends OpMode {
     public void loop() {
         double left;
         double right;
-        left = -gamepad1.left_stick_y;
-        right = -gamepad1.right_stick_y;
+        if(gamepad1.right_bumper){
+            turboPower = 1;
+        }
+        else{
+            turboPower = 2;
+        }
+        telemetry.addData("turboPower", turboPower);
+        left = -gamepad1.left_stick_y / turboPower;
+        right = -gamepad1.right_stick_y / turboPower;
         leftDrive.setPower(left);
         rightDrive.setPower(right);
         telemetry.addData("left", "%.2f", left);
